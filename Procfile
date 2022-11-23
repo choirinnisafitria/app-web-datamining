@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run hambali_uas.py
+web: sh setup.sh && streamlit run project_uas.py
