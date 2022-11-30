@@ -32,7 +32,7 @@ with description:
     st.write(""" Mengingat gaya hidup saat ini, orang hanya tidur melupakan manfaat tidur bagi tubuh manusia. Bantal Smart-Yoga (SaYoPillow) diusulkan untuk membantu dalam memahami hubungan antara stres dan tidur. Prosesor tepi dengan model yang menganalisis perubahan fisiologis yang terjadi selama tidur bersama dengan kebiasaan tidur diusulkan. Berdasarkan perubahan ini selama tidur, prediksi stres untuk hari berikutnya diusulkan.
     Di SayoPillow.csv, Anda akan melihat hubungan antara parameter - kisaran mendengkur pengguna, laju pernapasan, suhu tubuh, laju pergerakan tungkai, kadar oksigen darah, pergerakan mata, jumlah jam tidur, detak jantung, dan Tingkat Stres (0 - rendah/normal, 1 – sedang rendah, 2-sedang, 3-sedang tinggi, 4-tinggi)""")
     st.write("""Berikut penjelasan setiap fitur yang digunakan :""")
-    st.write("""###### tingkat mendengkur: Mendengkur atau mengorok saat tidur menjadi hal yang dapat mengganggu kualitas tidur, baik itu untuk yang mendengarnya bahkan juga untuk diri sendiri yang melakukannya. Dengkuran dapat terjadi karena terhambatnya atau menyempitnya saluran napas. Makin sempit saluran napas, makin keras pula suara dengkuran yang dihasilkan.:""")
+    st.write("""tingkat mendengkur: Mendengkur atau mengorok saat tidur menjadi hal yang dapat mengganggu kualitas tidur, baik itu untuk yang mendengarnya bahkan juga untuk diri sendiri yang melakukannya. Dengkuran dapat terjadi karena terhambatnya atau menyempitnya saluran napas. Makin sempit saluran napas, makin keras pula suara dengkuran yang dihasilkan.:""")
     st.write("""laju pernafasan: Laju pernapasan didefinisikan sebagai jumlah napas yang dilakukan per menitnya. Jumlah napas normal manusia dewasa per menitnya berkisar di antara 12-20 kali; namun, nilai ini merujuk pada keadaan tidak berolahraga. Saat berolahraga, jumlah napas akan meningkat dari interval 12-20.:""")
     st.write("""suhu tubuh: Untuk orang dewasa, suhu tubuh normal berkisar antara 36,1-37,2 derajat Celcius. Sedangkan untuk bayi dan anak kecil, suhu tubuh normal bisa lebih tinggi, yaitu antara 36,6-38 derajat Celcius. Suhu tubuh tinggi yang dikategorikan demam berada di atas 38 derajat Celcius dan tidak mutlak berbahaya.""") 
     st.write("""laju pergerakan tungkai: Ekstremitas, atau sering disebut anggota gerak, adalah perpanjangan dari anggota tubuh utama.""")
@@ -65,10 +65,10 @@ with description:
     2. L. Rachakonda, SP Mohanty, E. Kougianos, K. Karunakaran, dan M. Ganapathiraju, “Bantal Cerdas: Perangkat Berbasis IoT untuk Deteksi Stres Mempertimbangkan Kebiasaan Tidur”, dalam Prosiding Simposium Internasional IEEE ke-4 tentang Sistem Elektronik Cerdas ( iSES), 2018, hlm. 161--166.""")
     st.write("###### Aplikasi ini untuk : Deteksi Stres Manusia di dalam dan melalui Tidur ")
     st.write("###### Source Code Aplikasi ada di Github anda bisa acces di link : https://github.com/choirinnisafitria/app-web-datamining ")
+    uploaded_files = st.file_uploader("Upload file CSV", accept_multiple_files=True)
 
 with upload_data:
     st.write("""# Upload File""")
-    uploaded_files = st.file_uploader("Upload file CSV", accept_multiple_files=True)
     for uploaded_file in uploaded_files:
         df = pd.read_csv(uploaded_file)
         st.write("Nama File Anda = ", uploaded_file.name)
