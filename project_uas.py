@@ -30,37 +30,37 @@ with description:
     st.write("###### Sumber Data Set dari Kaggle : https://www.kaggle.com/datasets/laavanya/human-stress-detection-in-and-through-sleep?select=SaYoPillow.csv")
     st.write("""###### Tentang Data Set :""")
     st.write(""" Mengingat gaya hidup saat ini, orang hanya tidur melupakan manfaat tidur bagi tubuh manusia. Bantal Smart-Yoga (SaYoPillow) diusulkan untuk membantu dalam memahami hubungan antara stres dan tidur. Prosesor tepi dengan model yang menganalisis perubahan fisiologis yang terjadi selama tidur bersama dengan kebiasaan tidur diusulkan. Berdasarkan perubahan ini selama tidur, prediksi stres untuk hari berikutnya diusulkan.
-    Di SayoPillow.csv, Anda akan melihat hubungan antara parameter - kisaran mendengkur pengguna, laju pernapasan, suhu tubuh, laju pergerakan tungkai, kadar oksigen darah, pergerakan mata, jumlah jam tidur, detak jantung, dan Tingkat Stres (0 - rendah/normal, 1 – sedang rendah, 2-sedang, 3-sedang tinggi, 4-tinggi)
-    Berikut penjelasan setiap fitur yang digunakan:
-    tingkat mendengkur: Mendengkur atau mengorok saat tidur menjadi hal yang dapat mengganggu kualitas tidur, baik itu untuk yang mendengarnya bahkan juga untuk diri sendiri yang melakukannya. Dengkuran dapat terjadi karena terhambatnya atau menyempitnya saluran napas. Makin sempit saluran napas, makin keras pula suara dengkuran yang dihasilkan.
-    laju pernafasan: Laju pernapasan didefinisikan sebagai jumlah napas yang dilakukan per menitnya. Jumlah napas normal manusia dewasa per menitnya berkisar di antara 12-20 kali; namun, nilai ini merujuk pada keadaan tidak berolahraga. Saat berolahraga, jumlah napas akan meningkat dari interval 12-20.
-    suhu tubuh: Untuk orang dewasa, suhu tubuh normal berkisar antara 36,1-37,2 derajat Celcius. Sedangkan untuk bayi dan anak kecil, suhu tubuh normal bisa lebih tinggi, yaitu antara 36,6-38 derajat Celcius. Suhu tubuh tinggi yang dikategorikan demam berada di atas 38 derajat Celcius dan tidak mutlak berbahaya.
-    laju pergerakan tungkai: Ekstremitas, atau sering disebut anggota gerak, adalah perpanjangan dari anggota tubuh utama.
-    kadar oksigen dalam darah: 
-    Kadar oksigen tinggi
+    Di SayoPillow.csv, Anda akan melihat hubungan antara parameter - kisaran mendengkur pengguna, laju pernapasan, suhu tubuh, laju pergerakan tungkai, kadar oksigen darah, pergerakan mata, jumlah jam tidur, detak jantung, dan Tingkat Stres (0 - rendah/normal, 1 – sedang rendah, 2-sedang, 3-sedang tinggi, 4-tinggi)""")
+    st.write("""Berikut penjelasan setiap fitur yang digunakan :""")
+    st.write("""###### tingkat mendengkur: Mendengkur atau mengorok saat tidur menjadi hal yang dapat mengganggu kualitas tidur, baik itu untuk yang mendengarnya bahkan juga untuk diri sendiri yang melakukannya. Dengkuran dapat terjadi karena terhambatnya atau menyempitnya saluran napas. Makin sempit saluran napas, makin keras pula suara dengkuran yang dihasilkan.:""")
+    st.write("""laju pernafasan: Laju pernapasan didefinisikan sebagai jumlah napas yang dilakukan per menitnya. Jumlah napas normal manusia dewasa per menitnya berkisar di antara 12-20 kali; namun, nilai ini merujuk pada keadaan tidak berolahraga. Saat berolahraga, jumlah napas akan meningkat dari interval 12-20.:""")
+    st.write("""suhu tubuh: Untuk orang dewasa, suhu tubuh normal berkisar antara 36,1-37,2 derajat Celcius. Sedangkan untuk bayi dan anak kecil, suhu tubuh normal bisa lebih tinggi, yaitu antara 36,6-38 derajat Celcius. Suhu tubuh tinggi yang dikategorikan demam berada di atas 38 derajat Celcius dan tidak mutlak berbahaya.""") 
+    st.write("""laju pergerakan tungkai: Ekstremitas, atau sering disebut anggota gerak, adalah perpanjangan dari anggota tubuh utama.""")
+    st.write("""kadar oksigen dalam darah: """) 
+    st.write("""Kadar oksigen tinggi
     - Tekanan parsial oksigen (PaO2): di atas 120 mmHg
     Kadar oksigen normal
     - Saturasi oksigen (SaO2): 95–100%
     - Tekanan parsial oksigen (PaO2): 80–100 mmHg
     Kadar oksigen rendah
     - Saturasi oksigen (SaO2): di bawah 95%
-    - Tekanan parsial oksigen (PaO2): di bawah 80 mmHg
-    pergerakan mata: Gerakan bola mata diatur oleh beberapa area pada otak yaitu korteks, batang otak dan serebelum sehingga terbentuk gerak bola mata yang terintegrasi.
-    jumlah jam tidur: Berikut ini adalah beberapa waktu tidur yang sesuai dengan umur, agar bisa mendapatkan kualitas waktu tidur yang baik, diantaranya adalah:
+    - Tekanan parsial oksigen (PaO2): di bawah 80 mmHg""") 
+    st.write("""pergerakan mata: Gerakan bola mata diatur oleh beberapa area pada otak yaitu korteks, batang otak dan serebelum sehingga terbentuk gerak bola mata yang terintegrasi. """) 
+    st.write("""jumlah jam tidur: Berikut ini adalah beberapa waktu tidur yang sesuai dengan umur, agar bisa mendapatkan kualitas waktu tidur yang baik, diantaranya adalah: 
     A. Usia 0-1 bulan: bayi yang usianya baru 2 bulan membutuhkan waktu tidur 14-18 jam sehari.
     B. Usia 1-18 bulan: bayi membutuhkan waktu tidur 12-14 jam sehari termasuk tidur siang. 
     C. Usia 3-6 tahun: kebutuhan tidur yang sehat di usia anak menjelang masuk sekolah ini, mereka membutuhkan waktu untuk istirahat tidur 11-13 jam, termasuk tidur siang. 
     D. Usia 6-12 tahun: Anak usia sekolah ini memerlukan waktu tidur 10 jam. 
     E. Usia 12-18 tahun: menjelang remaja sampai remaja kebutuhan tidur yang sehat adalah 8-9 jam. 
-    F. Usia 18-40 tahun: orang dewasa membutuhkan waktu tidur 7-8 jam setiap hari.
-    detak jantung: Detak jantung normal per menit bagi orang dewasa, termasuk yang lebih tua, adalah 50 serta 100 bpm (denyut per menit). Sedangkan, atlet yang sedang berlatih memiliki detak jantung istirahat normal di bawah 60 bpm, kadang-kadang capai 40 bpm.
-    tingkat stres: 
+    F. Usia 18-40 tahun: orang dewasa membutuhkan waktu tidur 7-8 jam setiap hari.""")
+    st.write("""detak jantung: Detak jantung normal per menit bagi orang dewasa, termasuk yang lebih tua, adalah 50 serta 100 bpm (denyut per menit). Sedangkan, atlet yang sedang berlatih memiliki detak jantung istirahat normal di bawah 60 bpm, kadang-kadang capai 40 bpm.""")
+    st.write("""tingkat stres:  
     0 - rendah/normal
     1 – sedang rendah
     2- sedang
     3- sedang tinggi
-    4- tinggi
-    Jika Anda menggunakan kumpulan data ini atau menemukan informasi ini berkontribusi terhadap penelitian Anda, silakan kutip:
+    4- tinggi""")
+    st.write("""Jika Anda menggunakan kumpulan data ini atau menemukan informasi ini berkontribusi terhadap penelitian Anda, silakan kutip:
     1. L. Rachakonda, AK Bapatla, SP Mohanty, dan E. Kougianos, “SaYoPillow: Kerangka Kerja IoMT Terintegrasi-Privasi-Terintegrasi Blockchain untuk Manajemen Stres Mempertimbangkan Kebiasaan Tidur”, Transaksi IEEE pada Elektronik Konsumen (TCE), Vol. 67, No. 1, Feb 2021, hlm. 20-29.
     2. L. Rachakonda, SP Mohanty, E. Kougianos, K. Karunakaran, dan M. Ganapathiraju, “Bantal Cerdas: Perangkat Berbasis IoT untuk Deteksi Stres Mempertimbangkan Kebiasaan Tidur”, dalam Prosiding Simposium Internasional IEEE ke-4 tentang Sistem Elektronik Cerdas ( iSES), 2018, hlm. 161--166.""")
     st.write("###### Aplikasi ini untuk : Deteksi Stres Manusia di dalam dan melalui Tidur ")
