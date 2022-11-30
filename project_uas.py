@@ -65,7 +65,6 @@ with description:
     2. L. Rachakonda, SP Mohanty, E. Kougianos, K. Karunakaran, dan M. Ganapathiraju, “Bantal Cerdas: Perangkat Berbasis IoT untuk Deteksi Stres Mempertimbangkan Kebiasaan Tidur”, dalam Prosiding Simposium Internasional IEEE ke-4 tentang Sistem Elektronik Cerdas ( iSES), 2018, hlm. 161--166.""")
     st.write("###### Aplikasi ini untuk : Deteksi Stres Manusia di dalam dan melalui Tidur ")
     st.write("###### Source Code Aplikasi ada di Github anda bisa acces di link : https://github.com/choirinnisafitria/app-web-datamining ")
-    dataset = pd.read_csv("https://raw.githubusercontent.com/choirinnisafitria/app-web-datamining/main/SaYoPillow.csv")
 
 with upload_data:
     st.write("""# Upload File""")
