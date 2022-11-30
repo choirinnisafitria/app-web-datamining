@@ -83,7 +83,6 @@ with preporcessing:
 
     X = df.drop(columns="sl")
     y = df.sl
-    "### Membuang fitur yang tidak diperlukan"
     df
 
     le = preprocessing.LabelEncoder()
