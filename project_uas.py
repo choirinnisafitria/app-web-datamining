@@ -67,162 +67,367 @@ with description:
     st.write("###### Source Code Aplikasi ada di Github anda bisa acces di link : https://github.com/choirinnisafitria/app-web-datamining ")
 
 with upload_data:
-    st.write("""# Upload File""")
-    uploaded_files = st.file_uploader("Upload file CSV", accept_multiple_files=True)
-    for uploaded_file in uploaded_files:
-        df = pd.read_csv(uploaded_file)
-        st.write("Nama File Anda = ", uploaded_file.name)
-        st.dataframe(df)
+    # uploaded_files = st.file_uploader("Upload file CSV", accept_multiple_files=True)
+    # for uploaded_file in uploaded_files:
+    #     df = pd.read_csv(uploaded_file)
+    #     st.write("Nama File Anda = ", uploaded_file.name)
+    #     st.dataframe(df)
+    df = pd.read_csv('https://raw.githubusercontent.com/choirinnisafitria/app-web-datamining/main/SaYoPillow.csv')
+    st.dataframe(df)
 
 with preporcessing:
-    st.write("""# Preprocessing""")
-    df[["sr", "rr", "t", "lm", "bo", "rem", "sr.1", "hr"]].agg(['min','max'])
-
-    df.sl.value_counts()
-    # df = df.drop(columns=["date"])
-
-    X = df.drop(columns="sl")
-    y = df.sl
+    st.subheader("""Normalisasi Data""")
+    st.write("""Rumus Normalisasi Data :""")
+    st.image('https://i.stack.imgur.com/EuitP.png', use_column_width=False, width=250)
+    st.markdown("""
+    Dimana :
+    - X = data yang akan dinormalisasi atau data asli
+    - min = nilai minimum semua data asli
+    - max = nilai maksimum semua data asli
+    """)
+    #df = df.drop(columns=["date"])
+    #Mendefinisikan Varible X dan Y
+    X = df.drop(columns=['sl'])
+    y = df['sl'].values
     df
-
-    le = preprocessing.LabelEncoder()
-    le.fit(y)
-    y = le.transform(y)
-
-    "### Transformasi Label"
-    y
-
-    le.inverse_transform(y)
-
-    labels = pd.get_dummies(df.sl).columns.values.tolist()
-
-    "### Label"
-    labels
-
-    scaler = MinMaxScaler()
-    scaler.fit(X)
-    X = scaler.transform(X)
-    "### Normalize data transformasi"
     X
-
-    X.shape, y.shape
-
-    le.inverse_transform(y)
-
-    labels = pd.get_dummies(df.sl).columns.values.tolist()
-    
-    "### Label"
-    labels
-
+    df_min = X.min()
+    df_max = X.max()
+    #NORMALISASI NILAI X
     scaler = MinMaxScaler()
-    scaler.fit(X)
-    X = scaler.transform(X)
-    X
+    #scaler.fit(features)
+    #scaler.transform(features)
+    scaled = scaler.fit_transform(X)
+    features_names = X.columns.copy()
+    #features_names.remove('label')
+    scaled_features = pd.DataFrame(scaled, columns=features_names)
 
-    X.shape, y.shape
+    st.subheader('Hasil Normalisasi Data')
+    st.write(scaled_features)
 
+    st.subheader('Target Label')
+    dumies = pd.get_dummies(df.sl).columns.values.tolist()
+    dumies = np.array(dumies)
+
+    labels = pd.DataFrame({
+        '1' : [dumies[0]],
+        '2' : [dumies[1]],
+        '3' : [dumies[2]],
+        '4' : [dumies[3]],
+        '5' : [dumies[4]]
+    })
+    st.write(labels)
+
+    # st.subheader("""Normalisasi Data""")
+    # st.write("""Rumus Normalisasi Data :""")
+    # st.image('https://i.stack.imgur.com/EuitP.png', use_column_width=False, width=250)
+    # st.markdown("""
+    # Dimana :
+    # - X = data yang akan dinormalisasi atau data asli
+    # - min = nilai minimum semua data asli
+    # - max = nilai maksimum semua data asli
+    # """)
+    # df.weather.value_counts()
+    # df = df.drop(columns=["date"])
+    # #Mendefinisikan Varible X dan Y
+    # X = df.drop(columns=['weather'])
+    # y = df['weather'].values
+    # df_min = X.min()
+    # df_max = X.max()
+
+    # #NORMALISASI NILAI X
+    # scaler = MinMaxScaler()
+    # #scaler.fit(features)
+    # #scaler.transform(features)
+    # scaled = scaler.fit_transform(X)
+    # features_names = X.columns.copy()
+    # #features_names.remove('label')
+    # scaled_features = pd.DataFrame(scaled, columns=features_names)
+
+    # #Save model normalisasi
+    # from sklearn.utils.validation import joblib
+    # norm = "normalisasi.save"
+    # joblib.dump(scaled_features, norm) 
+
+
+    # st.subheader('Hasil Normalisasi Data')
+    # st.write(scaled_features)
 with modeling:
-    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
-    from sklearn.preprocessing import StandardScaler
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_test = sc.transform(X_test)
-    st.write("""# Modeling """)
-    st.subheader("Berikut ini adalah pilihan untuk Modeling")
-    st.write("Pilih Model yang Anda inginkan untuk Cek Akurasi")
-    naive = st.checkbox('Naive Bayes')
-    kn = st.checkbox('K-Nearest Neighbor')
-    des = st.checkbox('Decision Tree')
-    mod = st.button("Modeling")
+    training, test = train_test_split(scaled_features,test_size=0.2, random_state=1)#Nilai X training dan Nilai X testing
+    training_label, test_label = train_test_split(y, test_size=0.2, random_state=1)#Nilai Y training dan Nilai Y testing
+    with st.form("modeling"):
+        st.subheader('Modeling')
+        st.write("Pilihlah model yang akan dilakukan pengecekkan akurasi:")
+        naive = st.checkbox('Gaussian Naive Bayes')
+        k_nn = st.checkbox('K-Nearest Neighboor')
+        destree = st.checkbox('Decission Tree')
+        submitted = st.form_submit_button("Submit")
 
-    # NB
-    GaussianNB(priors=None)
+        # NB
+        GaussianNB(priors=None)
 
-    # Fitting Naive Bayes Classification to the Training set with linear kernel
-    nvklasifikasi = GaussianNB()
-    nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
+        # Fitting Naive Bayes Classification to the Training set with linear kernel
+        gaussian = GaussianNB()
+        gaussian = gaussian.fit(training, training_label)
 
-    # Predicting the Test set results
-    y_pred = nvklasifikasi.predict(X_test)
+        # Predicting the Test set results
+        y_pred = gaussian.predict(test)
     
-    y_compare = np.vstack((y_test,y_pred)).T
-    nvklasifikasi.predict_proba(X_test)
-    akurasi = round(100 * accuracy_score(y_test, y_pred))
-    # akurasi = 10
+        y_compare = np.vstack((test_label,y_pred)).T
+        gaussian.predict_proba(test)
+        gaussian_akurasi = round(100 * accuracy_score(test_label, y_pred))
+        # akurasi = 10
 
-    # KNN 
-    K=10
-    knn=KNeighborsClassifier(n_neighbors=K)
-    knn.fit(X_train,y_train)
-    y_pred=knn.predict(X_test)
+        #Gaussian Naive Bayes
+        # gaussian = GaussianNB()
+        # gaussian = gaussian.fit(training, training_label)
 
-    skor_akurasi = round(100 * accuracy_score(y_test,y_pred))
+        # probas = gaussian.predict_proba(test)
+        # probas = probas[:,1]
+        # probas = probas.round()
 
-    # DT
+        # gaussian_akurasi = round(100 * accuracy_score(test_label,probas))
 
-    dt = DecisionTreeClassifier()
-    dt.fit(X_train, y_train)
-    # prediction
-    dt.score(X_test, y_test)
-    y_pred = dt.predict(X_test)
-    #Accuracy
-    akurasiii = round(100 * accuracy_score(y_test,y_pred))
+        #KNN
+        K=10
+        knn=KNeighborsClassifier(n_neighbors=K)
+        knn.fit(training,training_label)
+        knn_predict=knn.predict(test)
 
-    if naive :
-        if mod :
-            st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(akurasi))
-    if kn :
-        if mod:
-            st.write("Model KNN accuracy score : {0:0.2f}" . format(skor_akurasi))
-    if des :
-        if mod :
-            st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(akurasiii))
-    
-    eval = st.button("Evaluasi semua model")
-    if eval :
-        # st.snow()
-        source = pd.DataFrame({
-            'Nilai Akurasi' : [akurasi,skor_akurasi,akurasiii],
-            'Nama Model' : ['Naive Bayes','KNN','Decision Tree']
-        })
+        knn_akurasi = round(100 * accuracy_score(test_label,knn_predict))
 
-        bar_chart = alt.Chart(source).mark_bar().encode(
-            y = 'Nilai Akurasi',
-            x = 'Nama Model'
-        )
+        #Decission Tree
+        dt = DecisionTreeClassifier()
+        dt.fit(training, training_label)
+        # prediction
+        dt_pred = dt.predict(test)
+        #Accuracy
+        dt_akurasi = round(100 * accuracy_score(test_label,dt_pred))
 
-        st.altair_chart(bar_chart,use_container_width=True)
+        if submitted :
+            if naive :
+                st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(gaussian_akurasi))
+            if k_nn :
+                st.write("Model KNN accuracy score : {0:0.2f}" . format(knn_akurasi))
+            if destree :
+                st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(dt_akurasi))
+        
+        grafik = st.form_submit_button("Grafik akurasi semua model")
+        if grafik:
+            data = pd.DataFrame({
+                'Akurasi' : [gaussian_akurasi, knn_akurasi, dt_akurasi],
+                'Model' : ['Gaussian Naive Bayes', 'K-NN', 'Decission Tree'],
+            })
 
+            chart = (
+                alt.Chart(data)
+                .mark_bar()
+                .encode(
+                    alt.X("Akurasi"),
+                    alt.Y("Model"),
+                    alt.Color("Akurasi"),
+                    alt.Tooltip(["Akurasi", "Model"]),
+                )
+                .interactive()
+            )
+            st.altair_chart(chart,use_container_width=True)
 with implementation:
-    st.write("# Implementation")
-    Snoring_Rate = st.number_input('Masukkan tingkat mendengkur : ')
-    Respiration_Rate = st.number_input('Masukkan laju respirasi : ')
-    Body_Temperature = st.number_input('Masukkan suhu tubuh : ')
-    Limb_Movement = st.number_input('Masukkan gerakan ekstremitas : ')
-    Blood_Oxygen = st.number_input('Masukkan oksigen darah : ')
-    Eye_Movement = st.number_input('Masukkan gerakan mata : ')
-    Sleeping_Hours = st.number_input('Masukkan jam tidur : ')
-    Heart_Rate = st.number_input('Masukkan detak jantung : ')
+    with st.form("my_form"):
+        st.subheader("Implementasi")
+        Snoring_Rate = st.number_input('Masukkan tingkat mendengkur : ')
+        Respiration_Rate = st.number_input('Masukkan laju respirasi : ')
+        Body_Temperature = st.number_input('Masukkan suhu tubuh : ')
+        Limb_Movement = st.number_input('Masukkan gerakan ekstremitas : ')
+        Blood_Oxygen = st.number_input('Masukkan oksigen darah : ')
+        Eye_Movement = st.number_input('Masukkan gerakan mata : ')
+        Sleeping_Hours = st.number_input('Masukkan jam tidur : ')
+        Heart_Rate = st.number_input('Masukkan detak jantung : ')
+        model = st.selectbox('Pilihlah model yang akan anda gunakan untuk melakukan prediksi?',
+                ('Gaussian Naive Bayes', 'K-NN', 'Decision Tree'))
 
-    def submit():
-        # input
-        inputs = np.array([[
-            Snoring_Rate,
-            Respiration_Rate,
-            Body_Temperature,
-            Limb_Movement,
-            Blood_Oxygen,
-            Eye_Movement,
-            Sleeping_Hours,
-            Heart_Rate
-            ]])
-        le = joblib.load("le.save")
-        model1 = joblib.load("knn.joblib")
-        y_pred3 = model1.predict(inputs)
-        st.write(f"Berdasarkan data yang di masukkan, maka Deteksi Stres Manusia di dalam dan melalui Tidur : {le.inverse_transform(y_pred3)[0]}")
+        prediksi = st.form_submit_button("Submit")
+        if prediksi:
+            inputs = np.array([
+                Snoring_Rate,
+                Respiration_Rate,
+                Body_Temperature,
+                Limb_Movement,
+                Blood_Oxygen,
+                Eye_Movement,
+                Sleeping_Hours,
+                Heart_Rate
+            ])
 
-    all = st.button("Submit")
-    if all :
-        st.balloons()
-        submit()
+            df_min = X.min()
+            df_max = X.max()
+            input_norm = ((inputs - df_min) / (df_max - df_min))
+            input_norm = np.array(input_norm).reshape(1, -1)
+
+            if model == 'Gaussian Naive Bayes':
+                mod = gaussian
+            if model == 'K-NN':
+                mod = knn 
+            if model == 'Decision Tree':
+                mod = dt
+
+            input_pred = mod.predict(input_norm)
+
+
+            st.subheader('Hasil Prediksi')
+            st.write('Menggunakan Pemodelan :', model)
+
+            st.write(input_pred)
+
+
+
+#     st.write("""# Preprocessing""")
+#     df[["sr", "rr", "t", "lm", "bo", "rem", "sr.1", "hr"]].agg(['min','max'])
+
+#     df.sl.value_counts()
+#     # df = df.drop(columns=["date"])
+
+#     X = df.drop(columns="sl")
+#     y = df.sl
+#     df
+
+#     le = preprocessing.LabelEncoder()
+#     le.fit(y)
+#     y = le.transform(y)
+
+#     "### Transformasi Label"
+#     y
+
+#     le.inverse_transform(y)
+
+#     labels = pd.get_dummies(df.sl).columns.values.tolist()
+
+#     "### Label"
+#     labels
+
+#     scaler = MinMaxScaler()
+#     scaler.fit(X)
+#     X = scaler.transform(X)
+#     "### Normalize data transformasi"
+#     X
+
+#     X.shape, y.shape
+
+#     le.inverse_transform(y)
+
+#     labels = pd.get_dummies(df.sl).columns.values.tolist()
+    
+#     "### Label"
+#     labels
+
+#     scaler = MinMaxScaler()
+#     scaler.fit(X)
+#     X = scaler.transform(X)
+#     X
+
+#     X.shape, y.shape
+
+# with modeling:
+#     X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
+#     from sklearn.preprocessing import StandardScaler
+#     sc = StandardScaler()
+#     X_train = sc.fit_transform(X_train)
+#     X_test = sc.transform(X_test)
+#     st.write("""# Modeling """)
+#     st.subheader("Berikut ini adalah pilihan untuk Modeling")
+#     st.write("Pilih Model yang Anda inginkan untuk Cek Akurasi")
+#     naive = st.checkbox('Naive Bayes')
+#     kn = st.checkbox('K-Nearest Neighbor')
+#     des = st.checkbox('Decision Tree')
+#     mod = st.button("Modeling")
+
+#     # NB
+#     GaussianNB(priors=None)
+
+#     # Fitting Naive Bayes Classification to the Training set with linear kernel
+#     nvklasifikasi = GaussianNB()
+#     nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
+
+#     # Predicting the Test set results
+#     y_pred = nvklasifikasi.predict(X_test)
+    
+#     y_compare = np.vstack((y_test,y_pred)).T
+#     nvklasifikasi.predict_proba(X_test)
+#     akurasi = round(100 * accuracy_score(y_test, y_pred))
+#     # akurasi = 10
+
+#     # KNN 
+#     K=10
+#     knn=KNeighborsClassifier(n_neighbors=K)
+#     knn.fit(X_train,y_train)
+#     y_pred=knn.predict(X_test)
+
+#     skor_akurasi = round(100 * accuracy_score(y_test,y_pred))
+
+#     # DT
+
+#     dt = DecisionTreeClassifier()
+#     dt.fit(X_train, y_train)
+#     # prediction
+#     dt.score(X_test, y_test)
+#     y_pred = dt.predict(X_test)
+#     #Accuracy
+#     akurasiii = round(100 * accuracy_score(y_test,y_pred))
+
+#     if naive :
+#         if mod :
+#             st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(akurasi))
+#     if kn :
+#         if mod:
+#             st.write("Model KNN accuracy score : {0:0.2f}" . format(skor_akurasi))
+#     if des :
+#         if mod :
+#             st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(akurasiii))
+    
+#     eval = st.button("Evaluasi semua model")
+#     if eval :
+#         # st.snow()
+#         source = pd.DataFrame({
+#             'Nilai Akurasi' : [akurasi,skor_akurasi,akurasiii],
+#             'Nama Model' : ['Naive Bayes','KNN','Decision Tree']
+#         })
+
+#         bar_chart = alt.Chart(source).mark_bar().encode(
+#             y = 'Nilai Akurasi',
+#             x = 'Nama Model'
+#         )
+
+#         st.altair_chart(bar_chart,use_container_width=True)
+
+# with implementation:
+#     st.write("# Implementation")
+#     Snoring_Rate = st.number_input('Masukkan tingkat mendengkur : ')
+#     Respiration_Rate = st.number_input('Masukkan laju respirasi : ')
+#     Body_Temperature = st.number_input('Masukkan suhu tubuh : ')
+#     Limb_Movement = st.number_input('Masukkan gerakan ekstremitas : ')
+#     Blood_Oxygen = st.number_input('Masukkan oksigen darah : ')
+#     Eye_Movement = st.number_input('Masukkan gerakan mata : ')
+#     Sleeping_Hours = st.number_input('Masukkan jam tidur : ')
+#     Heart_Rate = st.number_input('Masukkan detak jantung : ')
+
+#     def submit():
+#         # input
+#         inputs = np.array([[
+#             Snoring_Rate,
+#             Respiration_Rate,
+#             Body_Temperature,
+#             Limb_Movement,
+#             Blood_Oxygen,
+#             Eye_Movement,
+#             Sleeping_Hours,
+#             Heart_Rate
+#             ]])
+#         le = joblib.load("le.save")
+#         model1 = joblib.load("knn.joblib")
+#         y_pred3 = model1.predict(inputs)
+#         st.write(f"Berdasarkan data yang di masukkan, maka Deteksi Stres Manusia di dalam dan melalui Tidur : {le.inverse_transform(y_pred3)[0]}")
+
+#     all = st.button("Submit")
+#     if all :
+#         st.balloons()
+#         submit()
 
